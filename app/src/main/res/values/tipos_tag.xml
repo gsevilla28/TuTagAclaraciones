@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="array_tipotag">
+        <item>Seleccione el prefijo de su tag</item>
+        <item>CPFI</item>
+        <item>IMDM</item>
+        <item>005</item>
+        <item>006</item>
+
+    </string-array>
+
+</resources>

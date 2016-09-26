@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">tu tag Aclaraciones</string>
+    <string name="registro">Ingrese los primeros y los últimos cuatro digitos de su tarjeta de credito registrada en sistema</string>
+    <string name="title_completa_registro">Finalice su registro en sistema</string>
+    <string name="hitncelular">No celular</string>
+    <string name="hintEmail">Email</string>
+    <string name="hintContrasena">Contraseña</string>
+    <string name="hintConfirmaContrasena">Confirmar Contraseña</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="tipoPago1">Esquema de Pago: Postpago</string>
+    <string name="tipoPago2">Esquema de Pago: Prepago</string>
+</resources>
