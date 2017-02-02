@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_top">
         <item
-            android:icon="@android:drawable/ic_input_add"
+            android:icon="@drawable/ic_add_white_24dp"
             android:id="@+id/menu_add_tag"
             android:checkable="false"
-            android:title="Agreagar Otra Tag">
+            android:title="Agregar Otra Tag">
         </item>
         <item
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@drawable/account"
             android:id="@+id/menu_cuenta"
             android:checkable="false"
             android:title="Datos de la Cuenta">
         </item>
-    </group>
-    <group android:checkableBehavior="single">
         <item
-            android:icon="@android:drawable/ic_lock_power_off"
+            android:icon="@android:drawable/ic_dialog_alert"
+            android:id="@+id/menu_detalleAclaraciones"
+            android:checkable="false"
+            android:title="Detalle Aclaraciones">
+        </item>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_medium">
+        <item
+            android:icon="@drawable/ic_action_communication_call"
+            android:id="@+id/menu_contacto"
+            android:checkable="false"
+            android:title="Contáctanos">
+        </item>
+    </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/menu_botom">
+        <item
+            android:icon="@drawable/ic_action_content_clear"
             android:id="@+id/menu_salir"
             android:checkable="false"
-            android:title="Salir">
+            android:title="Cerrar Sesión">
         </item>
     </group>
 </menu>

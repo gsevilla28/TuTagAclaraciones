@@ -2,38 +2,45 @@ package models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 21/09/2016.
  */
-public class modelCruces {
+public class modelCruces implements Serializable {
 
     @SerializedName("Carril")
-
     private String carril;
+
     @SerializedName("Caseta")
-
     private String caseta;
+
     @SerializedName("Clase")
-
     private Integer clase;
+
     @SerializedName("Ejes")
-
     private Integer ejes;
+
     @SerializedName("Fecha")
-
     private String fecha;
+
+    @SerializedName("Hora")
+    private String hora;
+
     @SerializedName("Monto")
-
     private Double monto;
+
     @SerializedName("Rodada")
-
     private Integer rodada;
+
     @SerializedName("TipoMovimiento")
-
     private Integer tipoMovimiento;
-    @SerializedName("Tramo")
 
+    @SerializedName("Tramo")
     private String tramo;
+
+    @SerializedName("IdFolio")
+    private String idFolio;
 
     /**
      *
@@ -128,6 +135,24 @@ public class modelCruces {
     /**
      *
      * @return
+     * The hora
+     */
+    public String getHora() {
+        return hora;
+    }
+
+    /**
+     *
+     * @param hora
+     * The Hora
+     */
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    /**
+     *
+     * @return
      * The monto
      */
     public Double getMonto() {
@@ -197,4 +222,21 @@ public class modelCruces {
         this.tramo = tramo;
     }
 
+    /**
+     *
+     * @return
+     * The idFolio
+     */
+    public String getIdFolio() {
+        return idFolio;
+    }
+
+    /**
+     *
+     * @param idFolio
+     * The IdFolio
+     */
+    public void setIdFolio(String idFolio) {
+        this.idFolio = idFolio;
+    }
 }

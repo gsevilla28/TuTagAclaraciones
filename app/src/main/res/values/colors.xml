@@ -6,6 +6,8 @@
     <color name="botones">#051F7A</color>
     <color name="fuentebotones">#FFFFFF</color>
     <color name="gris">#BDBDBD</color>
+    <color name="toolbar">#6E6E6E</color>
     <color name="azulClaro">#A9D0F5</color>
+    <color name="negro">#000000</color>
 
 </resources>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">tu tag Aclaraciones</string>
+    <string name="app_name">Aclaraciones</string>
     <string name="registro">Ingrese los primeros y los últimos cuatro digitos de su tarjeta de credito registrada en sistema</string>
     <string name="title_completa_registro">Finalice su registro en sistema</string>
     <string name="hitncelular">No celular</string>
@@ -9,4 +9,19 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="tipoPago1">Esquema de Pago: Postpago</string>
     <string name="tipoPago2">Esquema de Pago: Prepago</string>
+    <string name="Movimientos">Movimientos por tag</string>
+    <string name="instrucciones_aclara">Instrucciones:
+        \n1. Verifique que los datos del cruce que desea aclarar sean correctos
+        \n2. Seleccione el motivo de su aclaración
+        \n3. De clic en ACLARAR y espere su número de folio</string>
+    <string name="idfacebookApp">fb://page/182861581806654</string>
+    <string name="wwwFace">https://www.facebook.com/PASE</string>
+    <string name="packageFeis">com.facebook.katana</string>
+    <string name="packagetwi">com.twitter.android</string>
+    <string name="wwwTwitter">https://twitter.com/tagpasemx</string>
+    <string name="idTwitterApp">twitter://user?user_id=tagpasemx</string>
+    <string name="numeroContacto">01 800 00 824 4283</string>
+    <string name="mailContacto">cavi@idmexico.com.mx</string>
+    <string name="webContacto">www.idmexico.com.mx</string>
+    <string name="fechaInicioCruces">01/10/2015</string>
 </resources>

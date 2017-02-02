@@ -1,20 +1,30 @@
 package gsevilla.mx.idmovil;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.ScrollingView;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.text.TextUtils;
 
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.internal.Utils;
 import models.Login;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +45,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @BindView(R.id.txt_pwd_login)
     EditText txtpwd;
 
+
+
     private ProgressDialog progressDialog ;
     private UtilPreference utilPreference;
 
@@ -54,6 +66,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.btnLogin).setOnClickListener(this);
         findViewById(R.id.btnRegistrase).setOnClickListener(this);
 
+        ScrollView mainLayout = (ScrollView) findViewById(R.id.login);
+        mainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(LoginActivity.this.getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
+
+
         utilPreference = new UtilPreference(LoginActivity.this);
         int LoginSuccess = utilPreference.GetLogin();
 
@@ -63,6 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -74,6 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.btnLogin:
                 DoLogin();
                 break;
+
         }
 
     }
@@ -115,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+
     private class LoginTask extends AsyncTask<String,String,String>{
 
         @Override
@@ -123,26 +149,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //instanciando WS
             wsTuTag wsTuTag = data.getRetrofitInstance().create(webService.wsTuTag.class);
              //ejecutando web service
-            Call<Login> callService = wsTuTag.getLoginWithQuery(args[0].toString(), args[1].toString());
+            Call<Login> callService = wsTuTag.getLoginWithQuery(args[0], args[1]);
 
             callService.enqueue(new Callback<Login>() {
                 @Override
                 public void onResponse(Call<Login> call, Response<Login> response) {
 
-                    if (response.body().getLogin() == 1) { //aqui deberia consultar al WS
-                        //Snackbar.make(findViewById(android.R.id.content), "LOGIN CON WS CORRECTO! :" + response.body().getUsuario(), Snackbar.LENGTH_INDEFINITE).show();
+                    if (response.body() != null) {
 
+                        if (response.body().getLogin() == 1) { //aqui deberia consultar al WS
 
-                        CerrarDialogo(); //cierra el bloqueo
+                            CerrarDialogo(); //cierra el bloqueo
                         /*si el log in es correcto se almacena una bandera en shared preferences*/
-                        utilPreference.SaveLogin(1);
+                            utilPreference.SaveLogin(1);
 
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class).putExtra("idcliente", Integer.parseInt(response.body().getUsuario())));
 
-                    } else {
+                            finish();
+
+                        } else {
+                            CerrarDialogo(); //cierra el bloqueo
+                            Snackbar.make(findViewById(android.R.id.content), "Usuario o contraseña incorrecto", Snackbar.LENGTH_SHORT).show();
+
+                        }
+                    }
+                    else{//objeto vacio
                         CerrarDialogo(); //cierra el bloqueo
-                        Snackbar.make(findViewById(android.R.id.content), "ERROR DE  Login", Snackbar.LENGTH_INDEFINITE).show();
+                        Toast.makeText(LoginActivity.this, "Servicio no Disponible", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -152,10 +185,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     CerrarDialogo(); //cierra el bloqueo
                     Toast.makeText(LoginActivity.this, "Servicio no Disponible", Toast.LENGTH_SHORT).show();
 
-                    /*solo para efecto de navegacion, quitar esta parte del codigo
-                    utilPreference.SaveLogin(1);
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();*/
 
                 }
             });

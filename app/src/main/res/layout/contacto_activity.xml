@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/include_toolbar"></include>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@drawable/logoidmexico"
+            android:layout_width="120dp"
+            android:layout_height="110dp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtTelContacto"
+                android:gravity="center"
+                android:background="@drawable/back"
+                android:text="@string/numeroContacto"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:src="@drawable/ic_action_communication_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtMailContacto"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/back"
+                android:text="@string/mailContacto"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_action_communication_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtWebContacto"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/back"
+                android:text="@string/webContacto"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+            <ImageView
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:tint="@color/botones"
+                android:src="@drawable/chrome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.CardView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp" />
+
+        <TextView
+            android:text="Redes Sociales"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <android.support.v7.widget.CardView
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/ic_facebook"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_facebook"
+                android:tint="@color/botones"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <ImageView
+                android:id="@+id/ic_twitter"
+                android:layout_marginRight="70dp"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="right"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/twitter"
+                android:tint="@color/botones"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+        </android.support.v7.widget.CardView>
+    </LinearLayout>
+</LinearLayout>

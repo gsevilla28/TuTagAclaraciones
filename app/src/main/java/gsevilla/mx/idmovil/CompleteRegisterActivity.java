@@ -2,16 +2,21 @@ package gsevilla.mx.idmovil;
 
 
 import android.app.ProgressDialog;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -27,9 +32,7 @@ import util.UtilPreference;
 import webService.data;
 import webService.wsTuTag;
 
-/**
- * Created by Administrator on 14/09/2016.
- */
+
 public class CompleteRegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
 
@@ -74,6 +77,16 @@ public class CompleteRegisterActivity extends AppCompatActivity implements View.
 
         findViewById(R.id.btn_termina_registro).setOnClickListener(this);
 
+        /*ScrollView mainLayout = (ScrollView) findViewById(R.id.complete_layout);
+        mainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(CompleteRegisterActivity.this.getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });*/
+
     }
 
     @Override
@@ -97,27 +110,31 @@ public class CompleteRegisterActivity extends AppCompatActivity implements View.
 
     private void RegistraTag() {
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Registrando Tag");
-        progressDialog.setMessage("Espere por favor...");
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
         String noCelular= this.celular.getText().toString();
         String correo = this.email.getText().toString();
         String contrasena = this.contrasena.getText().toString();
         String confirmaContra = this.confirmContrasena.getText().toString();
 
+         if (TextUtils.isEmpty(noCelular) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(contrasena) || TextUtils.isEmpty(confirmaContra)) {
 
-        if (contrasena.equals(confirmaContra)){
+             progressDialog = new ProgressDialog(this);
+             progressDialog.setTitle("Registrando Tag");
+             progressDialog.setMessage("Espere por favor...");
+             progressDialog.setCancelable(false);
+             progressDialog.show();
 
-            new RegisterNew().execute("0",alias,prefijo,numtar,noCelular,correo,contrasena); /*ejecuta tarea en 2do plano*/
+             if (contrasena.equals(confirmaContra)) {
 
-        }
+                 new RegisterNew().execute("0", alias, prefijo, numtar, noCelular, correo, contrasena, String.valueOf(tipopago)); /*ejecuta tarea en 2do plano*/
+
+             } else {
+                 cerrarDialog();
+                 Toast.makeText(CompleteRegisterActivity.this, "La contrseña y su confirmación no coinciden", Toast.LENGTH_SHORT).show();
+             }
+         }
         else{
-            cerrarDialog();
-            Toast.makeText(CompleteRegisterActivity.this, "La contrseña y su confirmación no coinciden", Toast.LENGTH_SHORT).show();
-        }
+             Snackbar.make(findViewById(android.R.id.content),"Ningun Campo puede quedar vacío",Snackbar.LENGTH_SHORT).show();
+         }
 
     }
     private void cerrarDialog (){
@@ -132,16 +149,14 @@ public class CompleteRegisterActivity extends AppCompatActivity implements View.
         @Override
         protected String doInBackground(final String... params) {
 
-
-
             wsTuTag wsTuTag = data.getRetrofitInstance().create(webService.wsTuTag.class);
-            Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(Integer.parseInt(params[0].toString()),params[1],params[2],params[3],params[4],params[5],params[6]);
+            Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(Integer.parseInt(params[0]),params[1],params[2],params[3],params[4],params[5],params[6],Integer.parseInt(params[7].toString()));
 
             llamadaWS.enqueue(new Callback<List<ModelTags>>() {
                 @Override
                 public void onResponse(Call<List<ModelTags>> call, Response<List<ModelTags>> response) {
 
-                    if (response.body().get(0).getIdcliente()>0){ /*si reponde con idcliente>0*/
+                    if (response.body().get(0).getIdcliente()>0){ /*si responde con idcliente>0*/
 
                         /*inserta datos en BD Local*/
                         DataSource dataSource = new DataSource(CompleteRegisterActivity.this);
@@ -172,7 +187,7 @@ public class CompleteRegisterActivity extends AppCompatActivity implements View.
                                 @Override
                                 public void onClick(View v) {
                                     wsTuTag wsTuTag = data.getRetrofitInstance().create(webService.wsTuTag.class);
-                                    Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(Integer.parseInt(params[0].toString()),params[1],params[2],params[3],params[4],params[5],params[6]);
+                                    Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(Integer.parseInt(params[0]),params[1],params[2],params[3],params[4],params[5],params[6],Integer.parseInt(params[7]));
                                     llamadaWS.enqueue(new Callback<List<ModelTags>>() {
                                         @Override
                                         public void onResponse(Call<List<ModelTags>> call, Response<List<ModelTags>> response) {
@@ -197,7 +212,6 @@ public class CompleteRegisterActivity extends AppCompatActivity implements View.
 
                                 }
                             }).show();
-
                 }
 
             });

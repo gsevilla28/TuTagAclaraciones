@@ -1,6 +1,7 @@
 package gsevilla.mx.idmovil;
 
-import android.app.ProgressDialog;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -8,9 +9,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +75,18 @@ public class VerifyPropertyActivity extends AppCompatActivity  {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        findViewById(R.id.btn_continuar_verify).setOnClickListener(new View.OnClickListener() {
+        ScrollView mainLayout = (ScrollView) findViewById(R.id.verify_layout);
+        mainLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(VerifyPropertyActivity.this.getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
+
+
+            findViewById(R.id.btn_continuar_verify).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Snackbar.make(findViewById(android.R.id.content),"Tarjeta correcta",Snackbar.LENGTH_SHORT).show();
@@ -141,7 +155,7 @@ public class VerifyPropertyActivity extends AppCompatActivity  {
                             final int idcliente = dataSource.getIdCliente();
 
                             wsTuTag wsTuTag = data.getRetrofitInstance().create(webService.wsTuTag.class);
-                            Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(idcliente,alias,prefijo,tarjeta,"","",""); /*registrar tag adicional*/
+                            Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(idcliente,alias,prefijo,tarjeta,"","","",tipopago); /*registrar tag adicional*/
 
                             llamadaWS.enqueue(new Callback<List<ModelTags>>() {
                                 @Override

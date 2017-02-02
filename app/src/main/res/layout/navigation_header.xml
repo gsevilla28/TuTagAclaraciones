@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical"
+    android:gravity="bottom"
+    android:background="@color/azulClaro">
 
     <ImageView
         android:layout_gravity="center"
-        android:src="@drawable/nav_inicio_header"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:cropToPadding="false"
-        />
+        android:src="@drawable/pase_inicio_512"
+        android:layout_marginTop="25dp"
+        android:layout_width="192dp"
+        android:layout_height="192dp"/>
 
     <TextView
-        android:id="@+id/text_header"
-        android:text="texto de prueba"
-        android:textColor="#FFFFFF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MI CARRO"
+        android:layout_marginBottom="3dp"
+        android:id="@+id/txtAlias_NavigationHeader"
+        android:layout_marginLeft="16dp"/>
 
+    <TextView
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="IMDM 12345678-9"
+        android:id="@+id/txtTarjeta_NavigationHeader"
+        android:layout_marginLeft="16dp"/>
 
 
 </LinearLayout>

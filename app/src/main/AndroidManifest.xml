@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="gsevilla.mx.idmovil">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
     <application
         android:allowBackup="true"
@@ -17,11 +21,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VerifyPropertyActivity" />
+        <activity android:name=".VerifyPropertyActivity" android:screenOrientation="portrait" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".CompleteRegisterActivity" />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".CompleteRegisterActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ingresa_aclaracion" android:screenOrientation="portrait"/>
+        <activity android:name=".DetalleAclaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".DatosCuentaActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".Contacto" android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

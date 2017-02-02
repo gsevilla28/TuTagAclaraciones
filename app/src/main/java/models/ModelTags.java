@@ -29,8 +29,8 @@ public class ModelTags {
 
     private String contrasena;
 
-
-    private int TipoPago;
+    @SerializedName("tipopago")
+    private Integer tipopago;
 
     /**
      *
@@ -159,17 +159,23 @@ public class ModelTags {
     }
 
 
-    public int getTipoPago() {
-        return TipoPago;
+    /**
+     *
+     * @return
+     * The tipopago
+     */
+    public Integer getTipopago() {
+        return tipopago;
     }
 
     /**
      *
-
-     * The contrasena
+     * @param tipopago
+     * The tipopago
      */
-    public void setTipoPago(int TipoPago) {
-        this.TipoPago = TipoPago;
+    public void setTipopago(Integer tipopago) {
+        this.tipopago = tipopago;
     }
+
 
 }

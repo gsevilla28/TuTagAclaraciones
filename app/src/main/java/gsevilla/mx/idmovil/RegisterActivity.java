@@ -1,6 +1,7 @@
 package gsevilla.mx.idmovil;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -11,9 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -63,6 +67,18 @@ public class RegisterActivity extends AppCompatActivity{
         getSupportActionBar().setTitle("Registro");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        /*metodo para ocultar el teclado cuando se le de un tab en cualquier lugar de la pantalla*/
+        ScrollView Register = (ScrollView) findViewById(R.id.register_layout);
+        Register.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(RegisterActivity.this.getCurrentFocus().getWindowToken(), 0);
+                return false;
+            }
+        });
+
 
         /*llenando el spinner con datos obtenidos de un values ///tipos_tag///*/
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.array_tipotag,R.layout.support_simple_spinner_dropdown_item);
@@ -169,10 +185,11 @@ public class RegisterActivity extends AppCompatActivity{
 
                                     if (adicional == 0) { /*si es registro de cliente nuevo*/
 
-                                        RegisterActivity.this.CerrarDialog(); /*cerrar el bloqueo*/
+                                         /*cerrar el bloqueo*/
                                         startActivity(new Intent(RegisterActivity.this, CompleteRegisterActivity.class)
                                                 .putExtra("valias", alias)
                                                 .putExtra("vprefijo", prefijo)
+                                                .putExtra("vtipopago", vtipopago)
                                                 .putExtra("vnumtar", numtar));
                                         finish();
                                     } else { /*si es tag adicional*/
@@ -182,27 +199,28 @@ public class RegisterActivity extends AppCompatActivity{
                                         final int idcliente = dataSource.getIdCliente();
 
                                         wsTuTag wsTuTag = data.getRetrofitInstance().create(webService.wsTuTag.class);
-                                        Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(idcliente, alias, prefijo, numtar, null, null, null); /*registrar tag adicional*/
+                                        Call<List<ModelTags>> llamadaWS = wsTuTag.RegistrarTagWithquery(idcliente, alias, prefijo, numtar, "", "", "", vtipopago); /*registrar tag adicional*/
 
                                         llamadaWS.enqueue(new Callback<List<ModelTags>>() {
                                             @Override
                                             public void onResponse(Call<List<ModelTags>> call, Response<List<ModelTags>> response) {
 
+                                                RegisterActivity.this.CerrarDialog();
                                                 dataSource.SaveTags(idcliente, alias, prefijo, numtar,vtipopago);
-                                                startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                                //startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                                                Intent i = new Intent(RegisterActivity.this,MainActivity.class);
+                                                setResult(RESULT_OK,i);
+                                                finish();
+
                                             }
 
                                             @Override
                                             public void onFailure(Call<List<ModelTags>> call, Throwable t) {
-
+                                                /*si el WS no contesta*/
+                                                Toast.makeText(RegisterActivity.this,"Servicio no disponible",Toast.LENGTH_SHORT).show();
                                             }
                                         });
-
-
-
-                                        finish();
                                     }
-
                                 }
 
                             }
@@ -240,18 +258,12 @@ public class RegisterActivity extends AppCompatActivity{
                     RegisterActivity.this.CerrarDialog(); /*cerrar el bloqueo*/
                     Toast.makeText(RegisterActivity.this, "Servicio no Disponible", Toast.LENGTH_SHORT).show();
 
-                    /*quitar esta parte del codigo
-                    RegisterActivity.this.CerrarDialog();
-                    startActivity(new Intent(RegisterActivity.this,CompleteRegisterActivity.class)
-                            .putExtra("valias", alias)
-                            .putExtra("vprefijo", prefijo)
-                            .putExtra("vnumtar", numtar));
-                    finish();*/
                 }
             });
 
             return "";
         }
+
     }
 
 }

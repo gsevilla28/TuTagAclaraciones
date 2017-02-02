@@ -20,6 +20,7 @@ public class UtilDialog extends ProgressDialog {
         progressDialog.setMessage(mensaje);
         progressDialog.setTitle(titulo);
         progressDialog.setCancelable(fijo);
+        //progressDialog.show();
 
         return progressDialog;
 
