@@ -2,32 +2,24 @@ package gsevilla.mx.idmovil;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Bundle;
-
 import android.os.Environment;
-
 import android.provider.MediaStore;
-
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -35,9 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-
 import android.widget.ImageView;
-
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,7 +49,6 @@ import sql.DataSource;
 import util.UtilDialog;
 import webService.data;
 import webService.wsTuTag;
-
 
 
 public class ingresa_aclaracion extends AppCompatActivity implements View.OnClickListener {
@@ -155,15 +144,15 @@ public class ingresa_aclaracion extends AppCompatActivity implements View.OnClic
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case 1: //DIFERENCIA DE TARIFA, MOTIVO 1
-                        btnCamera.setVisibility(view.GONE);
-                        imageView.setVisibility(view.GONE);
+                        btnCamera.setVisibility(View.GONE);
+                        imageView.setVisibility(View.GONE);
 
-                        if (modelCruces.getTramo().equals("ARCO NORTE")
-                                || modelCruces.getTramo().equals("CORREDOR CHAMAPA - LA VENTA")
-                                || modelCruces.getTramo().equals("MEXICALI - TECATE - TIJUANA - ENSENADA")) {
+                        if (modelCruces.getTramo().trim().equals("ARCO NORTE")
+                                || modelCruces.getTramo().trim().equals("CORREDOR CHAMAPA - LA VENTA")
+                                || modelCruces.getTramo().trim().equals("MEXICALI - TECATE - TIJUANA - ENSENADA")) {
 
-                            txtEntrada.setVisibility(view.VISIBLE);
-                            txtSalida.setVisibility(view.VISIBLE);
+                            txtEntrada.setVisibility(View.VISIBLE);
+                            txtSalida.setVisibility(View.VISIBLE);
                             dialog = new UtilDialog(ingresa_aclaracion.this);
                             dialog.GeneraDialogo("CONSULTANDO EL SERVIDOR", "ESPERE POR FAVOR..", false).show();
                             new ObtenerCasetas().execute(modelCruces.getCaseta());
@@ -171,17 +160,17 @@ public class ingresa_aclaracion extends AppCompatActivity implements View.OnClic
 
                         break;
                     case 5: //PAGO EN EFECTIVO, MOTIVO 5
-                        txtEntrada.setVisibility(view.GONE);
-                        txtSalida.setVisibility(view.GONE);
-                        btnCamera.setVisibility(view.VISIBLE);
-                        imageView.setVisibility(view.VISIBLE);
+                        txtEntrada.setVisibility(View.GONE);
+                        txtSalida.setVisibility(View.GONE);
+                        btnCamera.setVisibility(View.VISIBLE);
+                        imageView.setVisibility(View.VISIBLE);
                         ElegirFotografia();
                         break;
                     default:
-                        imageView.setVisibility(view.GONE);
-                        btnCamera.setVisibility(view.GONE);
-                        txtEntrada.setVisibility(view.GONE);
-                        txtSalida.setVisibility(view.GONE);
+                        imageView.setVisibility(View.GONE);
+                        btnCamera.setVisibility(View.GONE);
+                        txtEntrada.setVisibility(View.GONE);
+                        txtSalida.setVisibility(View.GONE);
                 }
             }
 
@@ -539,7 +528,6 @@ public class ingresa_aclaracion extends AppCompatActivity implements View.OnClic
                     for (int i=0; i<ListaCasetas.size();i++){
                         ArrayCasetas[i] = ListaCasetas.get(i).getNombreCaseta();
                     }
-
                     dialog.CerrarDialogo();
                 }
 
@@ -548,7 +536,6 @@ public class ingresa_aclaracion extends AppCompatActivity implements View.OnClic
                     dialog.CerrarDialogo();
                 }
             });
-
 
             return null;
         }

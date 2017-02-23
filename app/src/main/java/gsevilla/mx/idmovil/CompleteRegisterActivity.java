@@ -115,7 +115,7 @@ public class CompleteRegisterActivity extends AppCompatActivity implements View.
         String contrasena = this.contrasena.getText().toString();
         String confirmaContra = this.confirmContrasena.getText().toString();
 
-         if (TextUtils.isEmpty(noCelular) || TextUtils.isEmpty(correo) || TextUtils.isEmpty(contrasena) || TextUtils.isEmpty(confirmaContra)) {
+         if (!TextUtils.isEmpty(noCelular) || !TextUtils.isEmpty(correo) || !TextUtils.isEmpty(contrasena) || !TextUtils.isEmpty(confirmaContra)) {
 
              progressDialog = new ProgressDialog(this);
              progressDialog.setTitle("Registrando Tag");

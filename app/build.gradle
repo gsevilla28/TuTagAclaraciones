@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
-
+//apply plugin: 'android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 /*cuando marca error de apt entonces se agregan las siguientes lineas*/
 /***********************************************************************/
@@ -8,9 +9,9 @@ buildscript {
     repositories {
         mavenCentral()
     }
-    dependencies {
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
+//    dependencies {
+//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+//    }
 }
 /*********************************************************************/
 
@@ -30,12 +31,17 @@ android {
         applicationId "gsevilla.mx.idmovil"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 6
-        versionName "1.6"
+        versionCode 8
+        versionName "1.8"
+
+//        jackOptions {
+//            enabled true
+//        }
+
     }
     buildTypes {
         debug {
-            minifyEnabled true
+            minifyEnabled false
             //buildConfigField "String", "URL", "\"http://200.57.36.4/WebTuTag/TuTagBackEnd.asmx/\""
             buildConfigField "String", "URL", "\"http://151.1.9.77/ws_WebTuTag/TuTagBackEnd.asmx/\""
         }
@@ -48,6 +54,11 @@ android {
             renderscriptDebuggable false
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {

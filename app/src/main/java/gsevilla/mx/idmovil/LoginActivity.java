@@ -1,6 +1,5 @@
 package gsevilla.mx.idmovil;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -8,23 +7,17 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ScrollingView;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
 import android.text.TextUtils;
-
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.internal.Utils;
 import models.Login;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +25,6 @@ import retrofit2.Response;
 import util.UtilPreference;
 import webService.data;
 import webService.wsTuTag;
-
 
 
 /**
@@ -46,13 +38,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText txtpwd;
 
 
-
-    private ProgressDialog progressDialog ;
+    private ProgressDialog progressDialog;
     private UtilPreference utilPreference;
 
-    private String usuario="";
-    private String pwd="";
-
+    private String usuario = "";
+    private String pwd = "";
 
 
     @Override
@@ -67,20 +57,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.btnRegistrase).setOnClickListener(this);
 
         ScrollView mainLayout = (ScrollView) findViewById(R.id.login);
-        mainLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(LoginActivity.this.getCurrentFocus().getWindowToken(), 0);
-                return false;
-            }
+        mainLayout.setOnTouchListener((v, event) -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(LoginActivity.this.getCurrentFocus().getWindowToken(), 0);
+            return false;
         });
 
 
         utilPreference = new UtilPreference(LoginActivity.this);
         int LoginSuccess = utilPreference.GetLogin();
 
-        if (LoginSuccess !=0){
+        if (LoginSuccess != 0) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
@@ -91,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnRegistrase:
                 MakeRegister();
                 break;
@@ -105,32 +92,32 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void MakeRegister() {
         //Toast.makeText(LoginActivity.this, "Realizar Registro", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
 
     }
 
     private void DoLogin() {
 
-            try {
-                if (!TextUtils.isEmpty(txtpwd.getText()) && !TextUtils.isEmpty(txtusuario.getText())) { /*validar nulos*/
+        try {
+            if (!TextUtils.isEmpty(txtpwd.getText()) && !TextUtils.isEmpty(txtusuario.getText())) { /*validar nulos*/
 
-                    progressDialog = new ProgressDialog(LoginActivity.this);
-                    progressDialog.setTitle("Cargando");
-                    progressDialog.setMessage("Validando datos...");
-                    progressDialog.show();
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setTitle("Cargando");
+                progressDialog.setMessage("Validando datos...");
+                progressDialog.show();
 
-                    usuario = txtusuario.getText().toString();
-                    pwd = txtpwd.getText().toString();
+                usuario = txtusuario.getText().toString();
+                pwd = txtpwd.getText().toString();
 
-                    new LoginTask().execute(usuario, pwd); /*ejecuta proceso en 2do plano*/
+                new LoginTask().execute(usuario, pwd); /*ejecuta proceso en 2do plano*/
 
-                } else {
-                    Toast.makeText(LoginActivity.this, "ningun campo debe estar vacio", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                Toast.makeText(LoginActivity.this, "Servicio no Disponible", Toast.LENGTH_SHORT).show();
-
+            } else {
+                Toast.makeText(LoginActivity.this, "ningun campo debe estar vacio", Toast.LENGTH_SHORT).show();
             }
+        } catch (Exception e) {
+            Toast.makeText(LoginActivity.this, "Servicio no Disponible", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     private void CerrarDialogo() {
@@ -141,14 +128,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private class LoginTask extends AsyncTask<String,String,String>{
+    private class LoginTask extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... args) {
 
             //instanciando WS
             wsTuTag wsTuTag = data.getRetrofitInstance().create(webService.wsTuTag.class);
-             //ejecutando web service
+            //ejecutando web service
             Call<Login> callService = wsTuTag.getLoginWithQuery(args[0], args[1]);
 
             callService.enqueue(new Callback<Login>() {
@@ -172,8 +159,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Snackbar.make(findViewById(android.R.id.content), "Usuario o contraseña incorrecto", Snackbar.LENGTH_SHORT).show();
 
                         }
-                    }
-                    else{//objeto vacio
+                    } else {//objeto vacio
                         CerrarDialogo(); //cierra el bloqueo
                         Toast.makeText(LoginActivity.this, "Servicio no Disponible", Toast.LENGTH_SHORT).show();
 
@@ -189,7 +175,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
 
-            return  "";
+            return "";
         }
 
     }
